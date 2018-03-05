@@ -3,6 +3,8 @@ package com.naldojesse.lookify.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -22,7 +24,9 @@ public class Song implements java.io.Serializable{
     private String artist;
 
     @Column
-    private String rating;
+    @Min(1)
+    @Max(10)
+    private int rating;
 
     @Column(updatable=false)
     @DateTimeFormat (pattern = "MM/dd/yyyy HH:mm:ss")
@@ -36,10 +40,14 @@ public class Song implements java.io.Serializable{
 
     }
 
-    public Song(String title, String artist, String rating) {
+    public Song(String title, String artist, int rating) {
         this.title = title;
         this.artist = artist;
         this.rating = rating;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -58,11 +66,11 @@ public class Song implements java.io.Serializable{
         this.artist = artist;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
