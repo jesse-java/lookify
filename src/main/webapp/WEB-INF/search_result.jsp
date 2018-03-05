@@ -3,8 +3,13 @@
 
 <html>
 <body>
+<h2>Songs by artist: ${param.query}</h2>
 <a href="<c:url value="/dashboard"/>">Dashboard</a>
 
+<form action="<c:url value="/search/"/>">
+    <input type="text" name="query" value="${param.query}">
+    <input type="submit" value="New Search">
+</form>
 
 <table>
     <th>Name</th>
