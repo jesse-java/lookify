@@ -10,5 +10,6 @@ import java.util.List;
 public interface SongRespository extends CrudRepository<Song, Long>{
     List<Song> findAll();
 
+    void deleteById(Long id);
 
 }

@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class Songs {
@@ -40,5 +42,22 @@ public class Songs {
             songService.addSong(song);
             return "redirect:/dashboard";
         }
+    }
+
+    @RequestMapping("/songs/{index}")
+    public String findSongByIndex(Model model, @PathVariable("index") Long index) {
+        Optional<Song> song = songService.findSongById(index);
+        if (song.isPresent()) {
+            model.addAttribute("song", song.get());
+        } else {
+            return "redirect:/dashboard";
+        }
+        return "view_song.jsp";
+    }
+
+    @RequestMapping("/songs/delete/{id}")
+    public String deleteSong(@PathVariable("id") Long id) {
+        songService.destroySong(id);
+        return "redirect:/dashboard";
     }
 }
