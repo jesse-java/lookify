@@ -3,13 +3,11 @@ package com.naldojesse.lookify.controllers;
 
 import com.naldojesse.lookify.models.Song;
 import com.naldojesse.lookify.services.SongService;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -59,5 +57,21 @@ public class Songs {
     public String deleteSong(@PathVariable("id") Long id) {
         songService.destroySong(id);
         return "redirect:/dashboard";
+    }
+
+    @RequestMapping("/search/topTen")
+    public String topTen(Model model) {
+        songService.getTopTen();
+        List<Song> songs =  songService.getTopTen();
+        System.out.println(songs);
+        model.addAttribute("songs", songs);
+        return "topten.jsp";
+    }
+
+    @RequestMapping("/search")
+    public String searchArtists(Model model, @RequestParam("query") String query) {
+        List<Song> songs = songService.getSongsByArtist(query);
+        model.addAttribute("songs", songs);
+        return "search_result.jsp";
     }
 }

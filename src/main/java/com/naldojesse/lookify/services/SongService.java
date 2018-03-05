@@ -1,7 +1,8 @@
 package com.naldojesse.lookify.services;
 
 import com.naldojesse.lookify.models.Song;
-import com.naldojesse.lookify.repositories.SongRespository;
+import com.naldojesse.lookify.repositories.SongRepository;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,25 +10,33 @@ import java.util.Optional;
 
 @Service
 public class SongService {
-    private SongRespository songRespository;
-    public SongService (SongRespository songRespository) {
-        this.songRespository = songRespository;
+    private SongRepository songRepository;
+    public SongService (SongRepository songRepository) {
+        this.songRepository = songRepository;
     }
 
     public List<Song> allSongs() {
-        return songRespository.findAll();
+        return songRepository.findAll();
     }
 
     public void addSong(Song song) {
-        songRespository.save(song);
+        songRepository.save(song);
     }
 
     public Optional<Song> findSongById(Long id) {
-        return songRespository.findById(id);
+        return songRepository.findById(id);
     }
 
     public void destroySong(Long id) {
-        songRespository.deleteById(id);
+        songRepository.deleteById(id);
     }
 
+
+    public List<Song> getTopTen() {
+        return songRepository.findTop10ByOrderByRatingAsc();
+    }
+
+    public List<Song> getSongsByArtist(String query) {
+        return songRepository.findByArtist(query);
+    }
 }

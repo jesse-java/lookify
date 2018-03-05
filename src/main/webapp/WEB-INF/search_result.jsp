@@ -1,17 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-
 <body>
-<a href="<c:url value="/songs/new"/>">Add New</a>
-<a href="<c:url value="/search/topTen"/>">Top Songs</a>
-
-<form action="<c:url value="/search/"/>">
-    <input type="text" name="query">
-    <input type="submit" value="Search Artists">
-</form>
+<a href="<c:url value="/dashboard"/>">Dashboard</a>
 
 
 <table>
@@ -27,10 +19,5 @@
     </c:forEach>
 
 </table>
-
-
 </body>
-
-
-
 </html>
